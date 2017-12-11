@@ -22,7 +22,7 @@ public class Main {
 
         get("/", controller::renderIndex);
         post("/api/users", controller::userRegistration);
-
+        post("/api/login", controller::userLogin);
         enableDebugScreen();
     }
 }

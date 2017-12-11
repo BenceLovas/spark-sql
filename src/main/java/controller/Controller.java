@@ -1,8 +1,10 @@
 package controller;
 
+import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
 import spark.Response;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,9 +25,40 @@ public class Controller {
         return instance;
     }
 
+    public String userLogin(Request req, Response res) {
+        String userName = req.queryParams("userName");
+        String userPassword = req.queryParams("userPassword");
+        ResultSet user = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            System.out.println("PostgreSQL JDBC Driver Registered!");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/spark", "bans","pass");
+            PreparedStatement selectUser = connection.prepareStatement("SELECT id, password FROM users WHERE name = ?");
+            selectUser.setString(1, userName);
+            user = selectUser.executeQuery();
+
+            if (!user.next()) {
+                System.out.println("not valid username");
+            }
+            if (BCrypt.checkpw(userPassword, user.getString("password"))) {
+                System.out.println("password matches");
+            } else {
+                System.out.println("password not matches");
+            }
+            selectUser.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            System.out.println(e.getMessage());
+        }
+
+        res.redirect("/");
+        return "";
+    }
+
     public String userRegistration(Request req, Response res) {
         String userName = req.queryParams("userName");
         String userPassword = req.queryParams("userPassword");
+        userPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
         try {
             Class.forName("org.postgresql.Driver");
             System.out.println("PostgreSQL JDBC Driver Registered!");

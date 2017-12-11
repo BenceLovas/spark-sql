@@ -11,6 +11,11 @@
         <input type="password" name="userPassword" placeholder="Password" />
         <button type="submit">Register</button>
     </form>
+    <form action="/api/login" method="POST">
+        <input type="text" name="userName" placeholder="Username" />
+        <input type="password" name="userPassword" placeholder="Password" />
+        <button type="submit">Login</button>
+    </form>
     <p th:each="user : ${users}" th:text="${user.name} + ' ' + ${user.id} + ' ' +  ${user.password}"></p>
 </body>
 </html>
