@@ -9,17 +9,17 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public class Utils {
+public class ControllerUtils {
 
-    private static Utils instance = null;
+    private static ControllerUtils instance = null;
 
-    private Utils() {
+    private ControllerUtils() {
         // prevent instantiation
     }
 
-    static Utils getInstance() {
+    static ControllerUtils getInstance() {
         if (instance == null) {
-            instance = new Utils();
+            instance = new ControllerUtils();
         }
         return instance;
     }

@@ -1,4 +1,4 @@
-import controller.Controller;
+import controller.UserController;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -16,11 +16,12 @@ public class Main {
             // put data to localStorage
         });
 
-        Controller controller = Controller.getInstance();
+        UserController userController = UserController.getInstance();
 
-        get("/", controller::renderIndex);
-        post("/api/users", controller::userRegistration);
-        post("/api/login", controller::userLogin);
+        get("/", userController::renderIndex);
+        post("/api/users", userController::userRegistration);
+        post("/api/login", userController::userLogin);
+
         enableDebugScreen();
     }
 }

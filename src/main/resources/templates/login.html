@@ -16,8 +16,5 @@
         <input type="password" name="userPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
         <button type="submit">Login</button>
     </form>
-
-    <!--REMOVE THIS-->
-    <p th:each="user : ${users}" th:text="${user.name} + ' ' + ${user.id} + ' ' +  ${user.password}"></p>
 </body>
 </html>
