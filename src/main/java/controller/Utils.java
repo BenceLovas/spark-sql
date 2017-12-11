@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 public class Utils {
+
     private static Utils instance = null;
 
     private Utils() {

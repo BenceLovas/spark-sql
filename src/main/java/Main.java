@@ -1,7 +1,5 @@
 import controller.Controller;
 
-import java.util.Arrays;
-
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 

@@ -1,14 +1,12 @@
 package controller;
 
+import model.DatabaseConnection;
+import model.ModelBuilder;
 import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
 import spark.Response;
 
-import javax.xml.transform.Result;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Controller {
@@ -16,6 +14,7 @@ public class Controller {
     private static Controller instance = null;
 
     private Controller() {
+        // prevent instantiation
     }
 
     public static Controller getInstance() {
@@ -28,27 +27,17 @@ public class Controller {
     public String userLogin(Request req, Response res) {
         String userName = req.queryParams("userName");
         String userPassword = req.queryParams("userPassword");
-        ResultSet user = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            System.out.println("PostgreSQL JDBC Driver Registered!");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/spark", "bans","pass");
-            PreparedStatement selectUser = connection.prepareStatement("SELECT id, password FROM users WHERE name = ?");
-            selectUser.setString(1, userName);
-            user = selectUser.executeQuery();
 
-            if (!user.next()) {
-                System.out.println("not valid username");
-            }
-            if (BCrypt.checkpw(userPassword, user.getString("password"))) {
-                System.out.println("password matches");
-            } else {
-                System.out.println("password not matches");
-            }
-            selectUser.close();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            System.out.println(e.getMessage());
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+        ModelBuilder modelBuilder = ModelBuilder.getInstance();
+        String[] parameters = {userName};
+        Object passwordInDatabase = databaseConnection.fetchDatabase("SELECT id, password FROM users WHERE name = ?", modelBuilder::getUserPassword, parameters);
+
+        if (BCrypt.checkpw(userPassword, (String) passwordInDatabase)) {
+            System.out.println("password matches");
+            // set session with userid
+        } else {
+            System.out.println("password not matches");
         }
 
         res.redirect("/");
@@ -59,54 +48,22 @@ public class Controller {
         String userName = req.queryParams("userName");
         String userPassword = req.queryParams("userPassword");
         userPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
-        try {
-            Class.forName("org.postgresql.Driver");
-            System.out.println("PostgreSQL JDBC Driver Registered!");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/spark", "bans","pass");
-            PreparedStatement insertUser = connection.prepareStatement("INSERT INTO users (name, password) VALUES (?, ?)");
-            insertUser.setString(1, userName);
-            insertUser.setString(2, userPassword);
-            insertUser.executeQuery();
-            insertUser.close();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            System.out.println(e.getMessage());
-        }
+        String[] parameters = {userName, userPassword};
+
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+        databaseConnection.modifyDatabase("INSERT INTO users (name, password) VALUES (?, ?)", parameters);
 
         res.redirect("/");
         return "";
     }
 
     public String renderIndex(Request req, Response res) {
-        List users = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            System.out.println("PostgreSQL JDBC Driver Registered!");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/spark", "bans","pass");
-            PreparedStatement selectUsers = connection.prepareStatement("SELECT * FROM users");
-            ResultSet resultSet = selectUsers.executeQuery();
-            users = new ArrayList<>();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String userName = resultSet.getString("name");
-                String userPassword = resultSet.getString("password");
-
-                Map user = new HashMap();
-                user.put("id", id);
-                user.put("name", userName);
-                user.put("password", userPassword);
-
-                users.add(user);
-            }
-            selectUsers.close();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            System.out.println(e.getMessage());
-        }
-        Map<String, Object> model = new HashMap<>();
-        model.put("users", users);
+        ModelBuilder modelBuilder = ModelBuilder.getInstance();
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+        Object model = databaseConnection.fetchDatabase("SELECT * FROM users", modelBuilder::usersModel);
         Utils utils = Utils.getInstance();
-        return utils.renderTemplate(model, "index");
+
+        return utils.renderTemplate((Map) model, "login");
     }
 
     public String jsonResponse(Request request, Response response) {
