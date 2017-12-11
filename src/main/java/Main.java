@@ -13,11 +13,7 @@ public class Main {
         port(5000);
 
         before((request, response) -> {
-            if (Arrays.asList("GET", "DELETE").contains(request.requestMethod())) {
-                System.out.println(request.requestMethod() + " @ " + request.url() + " ° " + request.params());
-            } else {
-                System.out.println(request.requestMethod() + " @ " + request.url());
-            }
+            System.out.println(request.requestMethod() + " @ " + request.url());
             // check if user logged in
             // put data to localStorage
         });
@@ -25,8 +21,7 @@ public class Main {
         Controller controller = Controller.getInstance();
 
         get("/", controller::renderIndex);
-
-        post("/api/user", controller::userRegistration);
+        post("/api/users", controller::userRegistration);
 
         enableDebugScreen();
     }

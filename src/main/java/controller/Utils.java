@@ -10,16 +10,17 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 public class Utils {
-    private static Utils ourInstance = null;
+    private static Utils instance = null;
 
     private Utils() {
+        // prevent instantiation
     }
 
-    public static Utils getInstance() {
-        if (ourInstance == null) {
-            ourInstance = new Utils();
+    static Utils getInstance() {
+        if (instance == null) {
+            instance = new Utils();
         }
-        return ourInstance;
+        return instance;
     }
 
     public Map<String, String> parseJson(Request request) {
@@ -29,12 +30,12 @@ public class Utils {
         return gson.fromJson(request.body(), type);
     }
 
-    public String toJson(Object object) {
+    String toJson(Object object) {
         Gson gson = new Gson();
         return gson.toJson(object);
     }
 
-    public String renderTemplate(Map model, String template) {
+    String renderTemplate(Map model, String template) {
         return new ThymeleafTemplateEngine().render(new ModelAndView(model, template));
     }
 
