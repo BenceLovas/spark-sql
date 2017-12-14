@@ -5,6 +5,8 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
+    private static UserController userController = UserController.getInstance();
+
     public static void main(String[] args) {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFiles.location("/public");
@@ -16,11 +18,10 @@ public class Main {
             // put data to localStorage
         });
 
-        UserController userController = UserController.getInstance();
-
         get("/", userController::renderIndex);
         post("/api/users", userController::userRegistration);
         post("/api/login", userController::userLogin);
+
 
         enableDebugScreen();
     }

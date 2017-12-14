@@ -54,9 +54,9 @@ public class UserController {
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         String hashedPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
 
-        Map<String, String> result = userDao.insert(userName, hashedPassword);
+        boolean success = userDao.insert(userName, hashedPassword);
 
-        if ("true".equals(result.get("valid"))) {
+        if (success) {
             System.out.println("Registration successful.");
         } else {
             System.out.println("Registration is not successful.");
