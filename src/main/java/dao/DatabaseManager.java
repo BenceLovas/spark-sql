@@ -104,26 +104,4 @@ public class DatabaseManager {
         }
     }
 
-//    public static void closeConnection(PreparedStatement statement, Connection connection) {
-//        try {
-//            statement.close();
-//            connection.close();
-//        } catch (SQLException e) {
-//            System.out.println("Failed to close connection.");
-//            System.out.println(e.getMessage());
-//        }
-//    }
-//
-//    public static void closeConnection(PreparedStatement statement, Connection connection, ResultSet resultSet) {
-//        try {
-//            resultSet.close();
-//            statement.close();
-//            connection.close();
-//        } catch (SQLException e) {
-//            System.out.println("Failed to close connection.");
-//            System.out.println(e.getMessage());
-//        }
-//    }
-
-
 }

@@ -22,7 +22,6 @@ public class Main {
         post("/api/users", userController::userRegistration);
         post("/api/login", userController::userLogin);
 
-
         enableDebugScreen();
     }
 }
