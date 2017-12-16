@@ -1,0 +1,46 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --color-main: #dc4c46;
+}
+
+html {
+    background-color: #9a8f82;
+}
+
+.jumbotron {
+    background-color: #9a8f82 !important;
+}
+
+.button {
+    background-color: var(--color-main);
+    border-radius: 0;
+    border: none;
+}
+
+.button-text {
+    font-family: "Helvetica";
+    font-weight: bold;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.51), 0 1px 0 rgba(0, 0, 0, 0.51);
+    color: white;
+    text-transform: uppercase;
+}
+
+.button:focus {
+    outline: 0;
+}
+
+input {
+    border-width: 0px 0px 2px 0px;
+    border-color: var(--color-main);
+    background-color: white;
+}
+
+.hidden-text {
+    display: none;
+    position: absolute !important;
+    text-align: right;
+}
