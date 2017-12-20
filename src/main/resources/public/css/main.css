@@ -6,17 +6,14 @@
 
 :root {
     --color-main: #e51c23;
-    --color-dark-grey: #322829;
-    --color-light-grey: #9a8f82;
+    --color-dark-grey: #333333;
+    --color-light-grey: #777;
+    --color-grey: #555;
     --color-grenadine: #dc4c46;
 }
 
-html {
-    background-color: var(--color-dark-grey);
-}
-
-.main {
-    background-color: var(--color-light-grey);
+body, html {
+    background-color: white !important;
 }
 
 .button {
@@ -25,37 +22,42 @@ html {
     border: none;
 }
 
+.button:hover {
+    cursor: pointer;
+}
+
 .button-text {
     text-shadow: 0 0 1px rgba(0, 0, 0, 0.51), 0 1px 0 rgba(0, 0, 0, 0.51);
     color: white;
-    text-transform: uppercase;
-}
-
-.bold-text {
-    font-weight: bold;
 }
 
 .button:focus {
     outline: 0;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
+
+.bold {
+    font-weight: bold;
+}
+
 input {
     border-width: 0 0 2px 0;
-    border-color: var(--color-main);
-    background-color: white;
+    border-style: solid;
+    border-color: transparent;
+    border-image: linear-gradient(90deg, var(--color-grey), var(--color-dark-grey), var(--color-grey));
+    border-image-slice: 1;
+    background-color: transparent;
+    color: #333333;
 }
 
-.hidden {
-    display: none;
-    position: absolute !important;
-    text-align: right;
-    background-color: var(--color-dark-grey);
+input:focus {
+    outline: 0;
 }
 
-.skew {
-    transform: skewX(20deg);
-}
-
-.skew-revert {
-    transform: skewX(-20deg);
+::placeholder {
+    font-family: "Titillium Web", sans-serif;
+    color: var(--color-grey);
 }

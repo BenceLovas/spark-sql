@@ -7,66 +7,100 @@
 
     <title>TODO | Login</title>
 
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/index.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
 
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/index.js"></script>
 </head>
 
 <body>
-    <!--<div class="main">-->
-        <!--registration form-->
-        <div class="container">
-            <div class="row">
-                <div class="col-3 skew side-panel">&nbsp;</div>
-                <div class="col-12">
+<div id="left">&nbsp;</div>
+<div id="right">&nbsp;</div>
+    <div class="container-fluid dark-grey logo-wrapper">
+        <div class="row justify-content-center logo">
+                <img src="/img/todo.png" height="260px" width="260px" alt="TODO Logo"/>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid main-wrapper">
+        <div class="row">
+            <!--sign up-->
+            <div id="signUp" class="container grey">
+                <div class="row justify-content-center">
+                    <button id="signUpToggle" class="button grey col-12">
+                        <div class="row">
+                            <span class="col-8 button-text bold uppercase red align-text-middle">Sign Up</span>
+                            <span id="signUpToggleText" class="col-3 white align-text-middle">expand</span>
+                            <div class="col-1 almost-black white-font align-text-middle">
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                <div id="signUpForm" class="container-fluid hidden dark-grey">
                     <form action="/api/users" method="POST">
                         <div class="row">
-                            <input class="col-6 offset-3" placeholder="Name" type="text" name="userName" pattern="[A-Za-z]{3,}" title="Must contain at least three characters. Only letters are accepted."/>
-                            <div class="col-3 hidden">
-                                <div class="button-text">Name</div>
+                            <div class="col-3 label hidden almost-black white-font">
+                                <div>Name</div>
                             </div>
+                            <input class="col-12 white shift-left widthToggle" placeholder="Name" type="text" name="userName" pattern="[A-Za-z]{3,}" title="Must contain at least three characters. Only letters are accepted."/>
+                            <div class="w-100"></div>
                         </div>
                         <div class="row">
-                            <input class="col-6 offset-3" placeholder="Password" type="password" name="userPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
-                            <div class="col-3 hidden">
-                                <div class="button-text">Password</div>
+                            <div class="col-3 label hidden almost-black white-font">
+                                <div>Password</div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <button class="button col-6 offset-3" type="submit">
-                                <div class="button-text bold uppercase">Register</div>
-                            </button>
-                        </div>
-                    </form>
-                    <!--login form-->
-                    <form action="/api/login" method="POST">
-                        <div class="row">
-                            <input class="col-6 offset-3" placeholder="Name" type="text" name="userName" pattern="[A-Za-z]{3,}" title="Must contain at least three characters. Only letters are accepted."/>
-                            <div class="col-3 hidden">
-                                <div class="button-text">Name</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <input class="col-6 offset-3" placeholder="Password" type="password" name="userPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
-                            <div class="col-3 hidden">
-                                <div class="button-text">Password</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <button class="button col-6 offset-3" type="submit">
-                                <div class="button-text bold uppercase">Login</div>
+                            <input class="col-12 white shift-left widthToggle" placeholder="Password" type="password" name="userPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
+                            <div class="w-100"></div>
+                            <button class="button almost-black col-12" type="submit">
+                                <div class="button-text bold uppercase">Sign Up</div>
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div><!--container-->
-    <!--</div>&lt;!&ndash;main&ndash;&gt;-->
+            <!--login-->
+            <div id="logIn" class="container grey">
+                <div class="row justify-content-center">
+                    <button id="logInToggle" class="button grey col-12">
+                        <div class="row">
+                            <span class="col-8 button-text bold uppercase aqua align-text-middle">Log In</span>
+                            <span id="logInToggleText" class="col-3 white align-text-middle">expand</span>
+                            <div class="col-1 almost-black white-font align-text-middle">
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                <div id="logInForm" class="container-fluid hidden dark-grey">
+                    <form action="/api/login" method="POST">
+                        <div class="row">
+                            <div class="col-3 label hidden almost-black white-font">
+                                <div>Name</div>
+                            </div>
+                            <input class="col-12 white shift-left widthToggle" placeholder="Name" type="text" name="userName" pattern="[A-Za-z]{3,}" title="Must contain at least three characters. Only letters are accepted."/>
+                            <div class="w-100"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 label hidden almost-black white-font">
+                                <div>Password</div>
+                            </div>
+                            <input class="col-12 white shift-left widthToggle" placeholder="Password" type="password" name="userPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
+                            <div class="w-100"></div>
+                            <button class="button almost-black col-12" type="submit">
+                                <div class="button-text bold uppercase">Log In</div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

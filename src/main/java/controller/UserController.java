@@ -69,7 +69,7 @@ public class UserController {
     public String renderIndex(Request req, Response res) {
         Map model = new HashMap();
         ControllerUtils controllerUtils = ControllerUtils.getInstance();
-        return controllerUtils.renderTemplate(model, "login");
+        return controllerUtils.renderTemplate(model, "index");
     }
 
     public String jsonResponse(Request request, Response response) {
