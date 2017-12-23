@@ -29,6 +29,12 @@ public class UserController {
         return instance;
     }
 
+    public String userLogout(Request request, Response response) {
+        request.session().removeAttribute("username");
+        response.redirect("/login");
+        return "";
+    }
+
     public String renderIndex(Request req, Response res) {
         Map model = new HashMap();
         model.put("username", req.session().attribute("username"));

@@ -38,10 +38,11 @@ public class Main {
             }
         });
 
-        get ("/login",     userController::renderLogin);
-        get ("/index",     userController::renderIndex);
-        post("/api/users", userController::userRegistration);
-        post("/api/login", userController::userLogin);
+        get ("/login",      userController::renderLogin);
+        get ("/index",      userController::renderIndex);
+        post("/api/users",  userController::userRegistration);
+        post("/api/login",  userController::userLogin);
+        get ("/api/logout", userController::userLogout);
 
     }
 }
