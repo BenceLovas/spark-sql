@@ -69,11 +69,13 @@ public class UserController {
 
         if (success) {
             System.out.println("Registration successful.");
+            req.session().attribute("username", user.getName());
+            res.redirect("/index");
         } else {
             System.out.println("Registration is not successful.");
+            res.redirect("/");
         }
 
-        res.redirect("/");
         return "";
     }
 
