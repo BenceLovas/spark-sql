@@ -6,23 +6,12 @@ html {
     padding: 0 !important;
 }
 
-/*.container-fluid {*/
-    /*padding: 0 !important;*/
-    /*margin: 0 !important;*/
-/*}*/
-
 :root {
     --color-almost-black: #323232;
     --color-aqua: #37C6F4;
     --color-red: #ED2324;
     --color-dark-grey: #555;
     --color-grey: #777;
-
-    /*--color-main: #e51c23;*/
-    /*--color-dark-grey: #333333;*/
-    /*--color-light-grey: #777;*/
-    /*--color-grey: #555;*/
-    /*--color-grenadine: #dc4c46;*/
 }
 
 body,
@@ -37,8 +26,6 @@ html {
 
 .logo {
     padding: 80px 0 !important;
-    /*margin-bottom: 0px !important;*/
-
 }
 
 .main-wrapper {
@@ -55,7 +42,7 @@ html {
     border: none;
 }
 
-    .red {
+.red {
     background-color: var(--color-red);
 }
 
@@ -137,14 +124,6 @@ input:focus {
     height: 40px !important;
 }
 
-#signUpToggleText,
-#logInToggleText {
-    /*border-width: 0px 0px 2px 0px;*/
-    /*border-style: solid;*/
-    /*border-color: white;*/
-    /*box-shadow: 1px 1px 4px 0px white;*/
-}
-
 #signUp {
     margin-bottom: 10px !important;
 }
@@ -179,7 +158,6 @@ input:focus {
 }
 
 #left {
-    /*border-right: 2px solid var(--color-almost-black);*/
     left: 0;
     position: fixed !important;
     box-shadow: 1px 0px 3px var(--color-almost-black);

@@ -1,4 +1,4 @@
-package controller;
+package controller.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +17,7 @@ public class ControllerUtils {
         // prevent instantiation
     }
 
-    static ControllerUtils getInstance() {
+    public static ControllerUtils getInstance() {
         if (instance == null) {
             instance = new ControllerUtils();
         }
@@ -31,12 +31,12 @@ public class ControllerUtils {
         return gson.fromJson(request.body(), type);
     }
 
-    String toJson(Object object) {
+    public String toJson(Object object) {
         Gson gson = new Gson();
         return gson.toJson(object);
     }
 
-    String renderTemplate(Map model, String template) {
+    public String renderTemplate(Map model, String template) {
         return new ThymeleafTemplateEngine().render(new ModelAndView(model, template));
     }
 

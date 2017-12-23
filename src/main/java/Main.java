@@ -7,10 +7,11 @@ public class Main {
 
     private static UserController userController = UserController.getInstance();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFiles.location("/public");
         port(5000);
+        enableDebugScreen();
 
         before((request, response) -> {
             System.out.println(request.requestMethod() + " @ " + request.url());
@@ -18,10 +19,22 @@ public class Main {
             // put data to localStorage
         });
 
-        get("/", userController::renderIndex);
+        before("/", (request, response) -> {
+            if (request.session().attribute("username") != null) {
+                response.redirect("/index");
+                halt();
+            } else {
+                response.redirect("/login");
+                halt(404, "User Not Logged In.");
+            }
+        });
+
+
+        get ("/login",     userController::renderLogin);
+        get ("/index",     userController::renderIndex);
         post("/api/users", userController::userRegistration);
         post("/api/login", userController::userLogin);
 
-        enableDebugScreen();
+
     }
 }

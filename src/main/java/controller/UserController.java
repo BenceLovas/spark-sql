@@ -1,9 +1,12 @@
 package controller;
 
-import dao.implementation.UserDaoImpl;
+import controller.util.ControllerUtils;
+import dao.implementation.UserDAOImpl;
+import model.User;
 import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +15,8 @@ import java.util.Map;
 public class UserController {
 
     private static UserController instance = null;
+    private static UserDAOImpl userDao = UserDAOImpl.getInstance();
+    private static ControllerUtils controllerUtils = ControllerUtils.getInstance();
 
     private UserController() {
         // prevent instantiation
@@ -24,37 +29,43 @@ public class UserController {
         return instance;
     }
 
+    public String renderIndex(Request req, Response res) {
+        Map model = new HashMap();
+        model.put("username", req.session().attribute("username"));
+        return controllerUtils.renderTemplate(model, "index");
+    }
+
     public String userLogin(Request req, Response res) {
-        String userName = req.queryParams("userName");
-        String userPassword = req.queryParams("userPassword");
+        // storing password in user object without hash - that's sound problematic
+        // there is a "kinda" solution saved under codecool dictionary in chrome
+        User user = new User(req.queryParams("userName"), req.queryParams("userPassword"));
+        List<User> users = userDao.select(user);
+        HashMap<String, Object> model = new HashMap<>();
 
-        UserDaoImpl userDao = UserDaoImpl.getInstance();
-        List<Map<String, String>> userArray = userDao.select(userName);
-
-        if (userArray.size() == 0) {
+        if (users.size() == 0) {
             System.out.println("Not valid username.");
+            res.redirect("/");
         } else {
-            Map<String, String> userMap = userArray.get(0);
-            String passwordInDatabase = userMap.get("password");
-
-            if (BCrypt.checkpw(userPassword, passwordInDatabase)) {
+            User selectedUser = users.get(0);
+            if (BCrypt.checkpw(user.getPassword(), selectedUser.getPassword())) {
                 System.out.println("Password matches.");
+                req.session().attribute("username", selectedUser.getName());
+                model.put("username", selectedUser.getName());
+                res.redirect("/index");
             } else {
                 System.out.println("Password not matches.");
+                res.redirect("/");
             }
         }
 
-        res.redirect("/");
         return "";
     }
 
     public String userRegistration(Request req, Response res) {
-        String userName = req.queryParams("userName");
-        String userPassword = req.queryParams("userPassword");
-        UserDaoImpl userDao = UserDaoImpl.getInstance();
-        String hashedPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
+        User user = new User(req.queryParams("userName"),
+                             BCrypt.hashpw(req.queryParams("userPassword"), BCrypt.gensalt()));
 
-        boolean success = userDao.insert(userName, hashedPassword);
+        boolean success = userDao.insert(user);
 
         if (success) {
             System.out.println("Registration successful.");
@@ -66,16 +77,13 @@ public class UserController {
         return "";
     }
 
-    public String renderIndex(Request req, Response res) {
+    public String renderLogin(Request req, Response res) {
         Map model = new HashMap();
-        ControllerUtils controllerUtils = ControllerUtils.getInstance();
-        return controllerUtils.renderTemplate(model, "index");
+        return controllerUtils.renderTemplate(model, "login");
     }
 
     public String jsonResponse(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-
-        ControllerUtils controllerUtils = ControllerUtils.getInstance();
         return controllerUtils.toJson(model);
     }
 }
